@@ -1,14 +1,13 @@
 const express = require('express');
 const path = require('path');
-const nunjucks = require('nunjucks');
+const swig = require('swig');
+swig.setDefaults({ cache: false });
 const db = require('./db');
-nunjucks.configure('views', { noCache : true})
 const { Hotel, Restaurant, Activity, Place } = db.models;
-
 
 const app = express();
 app.set('view engine', 'html');
-app.engine('html', nunjucks.render);
+app.engine('html', swig.renderFile);
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
@@ -25,7 +24,7 @@ app.use(function(req, res, next){
   next();
 });
 
-app.use(require('morgan')('dev'))
+
 app.get('/', (req, res, next)=> {
   const options = {
     include: [ Place ]

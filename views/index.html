@@ -10,20 +10,20 @@
     {% include './_day.html' %}
   </div>
 </div>
-<script src='/vendor/jquery/dist/jquery.js'></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2vKOOqwSWrLrSi6tRO2Lz72nVVsTumV4&sensor=true"></script>
-<script src='/public/js/Map.js'></script>
-<script src='/public/js/app.js'></script>
-
 <script>
-//  var hotels = 'gabby'
-  var hotels = {{ hotels | dump | safe }};
-  var restaurants = {{ restaurants | dump | safe }};
-  var activities = {{ activities | dump | safe }};
-  console.log('i am being run', hotels)
+  {% autoescape %}
+  var options = {
+    hotels: {{ hotels | json }},
+    restaurants: {{ restaurants | json }},
+    activities: {{ activities | json }},
+  };
+  {% endautoescape %}
 </script>
-<script src='/public/js/test.js'></script>
-
-
-
+<script src='/vendor/jquery/dist/jquery.js'></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&sensor=true"></script>
+<script src='/public/js/Map.js'></script>
+<script src='/public/js/DayPicker.js'></script>
+<script src='/public/js/Day.js'></script>
+<script src='/public/js/Options.js'></script>
+<script src='/public/js/app.js'></script>
 {% endblock %}
